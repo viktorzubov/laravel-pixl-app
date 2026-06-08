@@ -16,6 +16,16 @@ Route::get('/feed', function () {
                 'handle' => '@michael',
             ],
             'postedDateTime' => '3h',
+            'replies' => [
+                [
+                    'profile' => [
+                        'name' => 'Allesia',
+                        'avatar' => '/images/alessia.png',
+                        'handle' => '@allesia',
+                    ],
+                    'postedDateTime' => '2d',
+                ],
+            ],
         ],
     ]));
 
