@@ -7,7 +7,19 @@ Route::get('/', function () {
 });
 
 Route::get('/feed', function () {
-    return view('feed');
+    // TODO: Fetch feed items from the database
+    $feedItems = json_decode(json_encode([
+        [
+            'profile' => [
+                'name' => 'Michael',
+                'avatar' => '/images/michael.png',
+                'handle' => '@michael',
+            ],
+            'postedDateTime' => '3h',
+        ],
+    ]));
+
+    return view('feed', ['feedItems' => $feedItems]);
 })->name('feed');
 
 Route::get('/profile', function () {
