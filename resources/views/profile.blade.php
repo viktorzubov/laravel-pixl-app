@@ -48,7 +48,7 @@
 
         <!-- Navigation/tabs -->
         <div class="mt-6 h-full">
-            <nav class="overflow-x-auto [scrollbar-width:none]">
+            <nav class="overflow-x-auto scrollbar-none">
                 <ul class="flex min-w-max justify-end gap-8 text-sm">
                     <li><a href="#">Posts</a></li>
                     <li>
@@ -83,7 +83,7 @@
                                         href="/profile">@mmich_jj</a>
                                 </p>
                             </div>
-                            <button class="group flex gap-[3px] py-2" aria-label="Post options">
+                            <button class="group flex gap-0.75 py-2" aria-label="Post options">
                                 <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
                                 <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
                                 <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
@@ -102,7 +102,7 @@
                                 <!-- Like -->
                                 <div class="flex items-center gap-1">
                                     <button aria-label="Like" class="hover:text-pixl">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="h-[17px]"
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="h-4.25"
                                             viewBox="0 0 20 17">
                                             <g fill="currentColor" clip-path="url(#a)">
                                                 <path
@@ -127,7 +127,7 @@
                                 <!-- Comment -->
                                 <div class="flex items-center gap-1">
                                     <button aria-label="Comment" class="hover:text-pixl">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="h-[17px]"
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="h-4.25"
                                             viewBox="0 0 20 17">
                                             <g fill="currentColor" clip-path="url(#a)">
                                                 <path d="M3.581 0h1.824v1.824H3.581z" />
@@ -152,7 +152,7 @@
                                 <!-- Re-post -->
                                 <div class="flex items-center gap-1">
                                     <button aria-label="Re-post" class="hover:text-pixl">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="h-[17px]"
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="h-4.25"
                                             viewBox="0 0 20 17">
                                             <path fill="currentColor" d="M1.429 3.857H0v1.429h1.429V3.857Z" />
                                             <path fill="currentColor" d="M2.854 3.857H1.426v1.429h1.428V3.857Z" />
@@ -188,7 +188,7 @@
                                 <!-- Save -->
                                 <div class="flex items-center gap-1">
                                     <button aria-label="Save" class="hover:text-pixl">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="h-[17px]"
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="h-4.25"
                                             viewBox="0 0 14 17">
                                             <g fill="currentColor" clip-path="url(#a)">
                                                 <path
@@ -213,7 +213,7 @@
                                 <!-- Share -->
                                 <div class="flex items-center gap-1">
                                     <button aria-label="Share" class="hover:text-pixl">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="h-[17px]"
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="h-4.25"
                                             viewBox="0 0 19 17">
                                             <g fill="currentColor" clip-path="url(#a)">
                                                 <path d="M2.125 6.375H0V8.5h2.125V6.375Z" />
@@ -244,7 +244,7 @@
                             </div>
                         </div>
                         <!-- Reply form -->
-                        <div class="border-pixl-light/10 bg-pixl-light/[3%] mt-8 flex items-start gap-4 border-t p-4">
+                        <div class="border-pixl-light/10 bg-pixl-light/3 mt-8 flex items-start gap-4 border-t p-4">
                             <a href="/profile" class="shrink-0">
                                 <img src="/images/adrian.png" alt="Avatar for Adrian" class="size-10 object-cover" />
                             </a>
@@ -366,7 +366,7 @@
                                                 href="/profile">@simonswiss</a>
                                         </p>
                                     </div>
-                                    <button class="group flex gap-[3px] py-2" aria-label="Post options">
+                                    <button class="group flex gap-0.75 py-2" aria-label="Post options">
                                         <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
                                         <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
                                         <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
@@ -381,8 +381,8 @@
                                         <!-- Like -->
                                         <div class="flex items-center gap-1">
                                             <button aria-label="Like" class="hover:text-pixl">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                    class="h-[17px]" viewBox="0 0 20 17">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="h-4.25"
+                                                    viewBox="0 0 20 17">
                                                     <g fill="currentColor" clip-path="url(#a)">
                                                         <path
                                                             d="M5.714 0H2.857v2.857h2.857V0Zm2.858 0H5.714v2.857h2.858V0Zm2.857 2.858H8.57v2.857h2.858V2.858ZM14.288 0h-2.857v2.857h2.857V0Z" />
@@ -406,8 +406,8 @@
                                         <!-- Comment -->
                                         <div class="flex items-center gap-1">
                                             <button aria-label="Comment" class="hover:text-pixl">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                    class="h-[17px]" viewBox="0 0 20 17">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="h-4.25"
+                                                    viewBox="0 0 20 17">
                                                     <g fill="currentColor" clip-path="url(#a)">
                                                         <path d="M3.581 0h1.824v1.824H3.581z" />
                                                         <path
@@ -431,8 +431,8 @@
                                         <!-- Re-post -->
                                         <div class="flex items-center gap-1">
                                             <button aria-label="Re-post" class="hover:text-pixl">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                    class="h-[17px]" viewBox="0 0 20 17">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="h-4.25"
+                                                    viewBox="0 0 20 17">
                                                     <path fill="currentColor" d="M1.429 3.857H0v1.429h1.429V3.857Z" />
                                                     <path fill="currentColor"
                                                         d="M2.854 3.857H1.426v1.429h1.428V3.857Z" />
@@ -472,8 +472,8 @@
                                         <!-- Save -->
                                         <div class="flex items-center gap-1">
                                             <button aria-label="Save" class="hover:text-pixl">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                    class="h-[17px]" viewBox="0 0 14 17">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="h-4.25"
+                                                    viewBox="0 0 14 17">
                                                     <g fill="currentColor" clip-path="url(#a)">
                                                         <path
                                                             d="M1.545 7.727H0v1.546h1.545V7.727Zm0 1.546H0v1.545h1.545V9.273Zm0 1.545H0v1.546h1.545v-1.546Zm0 1.546H0v1.545h1.545v-1.545Zm0 1.546H0v1.545h1.545v-1.546Zm1.545 1.544H1.546V17h1.546v-1.546Z" />
@@ -497,8 +497,8 @@
                                         <!-- Share -->
                                         <div class="flex items-center gap-1">
                                             <button aria-label="Share" class="hover:text-pixl">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                    class="h-[17px]" viewBox="0 0 19 17">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="h-4.25"
+                                                    viewBox="0 0 19 17">
                                                     <g fill="currentColor" clip-path="url(#a)">
                                                         <path d="M2.125 6.375H0V8.5h2.125V6.375Z" />
                                                         <path
