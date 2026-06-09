@@ -67,12 +67,9 @@
 
         <!-- Feed -->
         <ol class="border-pixl-light/10 border-t pt-4">
-
             @foreach ($posts as $item)
-                <!-- Feed item -->
                 <x-post :post="$item->isRepost() && $item->content === null ? $item->repostOf : $item" :show-engagement="true" :show-replies="true" />
             @endforeach
-            <!-- More feed items... -->
         </ol>
 
         <footer class="mt-30 ml-14">

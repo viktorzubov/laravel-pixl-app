@@ -25,4 +25,36 @@ class ProfileController extends Controller
             'posts' => $posts,
         ]);
     }
+
+    public function replies(Profile $profile)
+    {
+        $profile->loadCount(['followings', 'followers']);
+
+        $posts = Post::query()
+            ->where(fn ($q) => $q
+                ->whereBelongsTo($profile, 'profile')
+                ->whereNull('parent_id')
+            )
+            ->orWhereHas('replies', fn ($q) => $q
+                ->whereBelongsTo($profile, 'profile')
+            )
+            ->with([
+                'profile',
+                'repostOf' => fn ($q) => $q->withCount(['likes', 'reposts', 'replies']),
+                'repostOf.profile',
+                'parent.profile',
+                'replies' => fn ($q) => $q
+                    ->whereBelongsTo($profile, 'profile')
+                    ->with('profile')
+                    ->oldest(),
+            ])
+            ->withCount(['likes', 'reposts', 'replies'])
+            ->latest()
+            ->get();
+
+        return view('profiles.replies', [
+            'profile' => $profile,
+            'posts' => $posts,
+        ]);
+    }
 }
