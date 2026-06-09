@@ -8,6 +8,7 @@ Route::get('/', function () {
 });
 
 Route::get('/{profile:handle}', [ProfileController::class, 'show'])->name('profiles.show');
+Route::get('/{profile:handle}/with_replies', [ProfileController::class, 'replies'])->name('profiles.replies');
 
 Route::get('/feed', function () {
     // TODO: Fetch feed items from the database
