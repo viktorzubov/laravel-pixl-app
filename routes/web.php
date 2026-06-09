@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/{profile:handle}', [ProfileController::class, 'show'])->name('profiles.show');
 
 Route::get('/feed', function () {
     // TODO: Fetch feed items from the database
