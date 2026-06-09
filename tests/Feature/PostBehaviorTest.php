@@ -34,3 +34,34 @@ test('can have multiple replies', function () {
         ->and($original->replies)->toHaveCount(4)
         ->and($original->replies->contains($replies->first()))->toBeTrue();
 });
+
+test('create plain repost', function () {
+    $original = Post::factory()->create();
+
+    $repostProfile = Profile::factory()->create();
+    $repost = Post::repost($repostProfile, $original);
+
+    expect($repost->repostOf->is($original))->toBeTrue()
+        ->and($original->reposts)->toHaveCount(1)
+        ->and($repost->content)->toBeNull();
+});
+
+test('can have multiple reposts', function () {
+    $original = Post::factory()->create();
+    $reposts = Post::factory()->count(4)->repost($original)->create();
+
+    expect($reposts->first()->repostOf->is($original))->toBeTrue()
+        ->and($original->reposts)->toHaveCount(4)
+        ->and($original->reposts->contains($reposts->first()))->toBeTrue();
+});
+
+test('create a quote repost', function () {
+    $original = Post::factory()->create();
+
+    $repostProfile = Profile::factory()->create();
+    $repost = Post::repost($repostProfile, $original, 'This is a quote repost.');
+
+    expect($repost->repostOf->is($original))->toBeTrue()
+        ->and($original->reposts)->toHaveCount(1)
+        ->and($repost->content)->toBe('This is a quote repost.');
+});

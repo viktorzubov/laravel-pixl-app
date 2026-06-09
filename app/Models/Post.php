@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['profile_id', 'parent_id', 'content'])]
+#[Fillable(['profile_id', 'parent_id', 'content', 'repost_of_id'])]
 class Post extends Model
 {
     /** @use HasFactory<PostFactory> */
@@ -40,6 +40,11 @@ class Post extends Model
         return $this->hasMany(Post::class, 'repost_of_id');
     }
 
+    public function repostOf(): BelongsTo
+    {
+        return $this->belongsTo(Post::class, 'repost_of_id');
+    }
+
     public static function publish(Profile $profile, string $content): self
     {
         return self::create([
@@ -58,5 +63,16 @@ class Post extends Model
             'parent_id' => $original->id,
             'repost_of_id' => null,
         ]);
+    }
+
+    public static function repost(Profile $profile, Post $original, ?string $content = null): self
+    {
+        return self::create([
+            'profile_id' => $profile->id,
+            'content' => $content,
+            'parent_id' => null,
+            'repost_of_id' => $original->id,
+        ]);
+
     }
 }
