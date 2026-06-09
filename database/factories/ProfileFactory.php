@@ -18,12 +18,15 @@ class ProfileFactory extends Factory
      */
     public function definition(): array
     {
+        $handle = fake()->unique()->userName();
+
         return [
             'user_id' => User::factory(),
             'display_name' => fake()->name(),
-            'handle' => fake()->unique()->userName(),
+            'handle' => $handle,
             'bio' => fake()->sentence(3),
-            'avatar_url' => fake()->imageUrl(90, 90, 'people'),
+            'avatar_url' => 'https://dummyimage.com/90x90/eee/000',
+            'cover_url' => 'https://dummyimage.com/1400x640/555/ECA749?text='.$handle,
         ];
     }
 }
