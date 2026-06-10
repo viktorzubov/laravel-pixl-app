@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -9,6 +10,10 @@ Route::get('/', function () {
 
 Route::get('/{profile:handle}', [ProfileController::class, 'show'])->name('profiles.show');
 Route::get('/{profile:handle}/with_replies', [ProfileController::class, 'replies'])->name('profiles.replies');
+
+Route::scopeBindings()->group(function () {
+    Route::get('/{profile:handle}/status/{post}', [PostController::class, 'show'])->name('post.show');
+});
 
 Route::get('/feed', function () {
     // TODO: Fetch feed items from the database

@@ -52,14 +52,38 @@ class DatabaseSeeder extends Seeder
             }
         }
 
+        // Depth 1: replies to root posts
+        $depth1Replies = collect();
         for ($i = 0; $i < rand(20, 30); $i++) {
             $parentPost = $posts->random();
             $replier = $profiles->where('id', '!=', $parentPost->profile_id)->random();
 
-            Post::factory()->reply($parentPost)->create([
+            $reply = Post::factory()->reply($parentPost)->create([
+                'profile_id' => $replier->id,
+            ]);
+            $depth1Replies->push($reply);
+        }
+
+        // Depth 2: replies to depth-1 replies
+        $depth2Replies = collect();
+        for ($i = 0; $i < rand(10, 15); $i++) {
+            $parentReply = $depth1Replies->random();
+            $replier = $profiles->where('id', '!=', $parentReply->profile_id)->random();
+
+            $reply = Post::factory()->reply($parentReply)->create([
+                'profile_id' => $replier->id,
+            ]);
+            $depth2Replies->push($reply);
+        }
+
+        // Depth 3: replies to depth-2 replies
+        for ($i = 0; $i < rand(5, 8); $i++) {
+            $parentReply = $depth2Replies->random();
+            $replier = $profiles->where('id', '!=', $parentReply->profile_id)->random();
+
+            Post::factory()->reply($parentReply)->create([
                 'profile_id' => $replier->id,
             ]);
         }
-
     }
 }
