@@ -47,36 +47,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/{profile:handle}/unfollow', [ProfileController::class, 'unfollow'])->name('profiles.unfollow');
 });
 
-Route::get('/feed', function () {
-    // TODO: Fetch feed items from the database
-    $feedItems = json_decode(json_encode([
-        [
-            'profile' => [
-                'name' => 'Michael',
-                'avatar' => '/images/michael.png',
-                'handle' => '@michael',
-            ],
-            'postedDateTime' => '3h',
-            'replies' => [
-                [
-                    'profile' => [
-                        'name' => 'Allesia',
-                        'avatar' => '/images/alessia.png',
-                        'handle' => '@allesia',
-                    ],
-                    'postedDateTime' => '2d',
-                ],
-            ],
-        ],
-    ]));
-
-    return view('feed', ['feedItems' => $feedItems]);
-})->name('feed');
-
-Route::get('/profile', function () {
-    return view('profile');
-})->name('profile');
-
 Route::get('/{profile:handle}', [ProfileController::class, 'show'])->name('profiles.show');
 Route::get('/{profile:handle}/with_replies', [ProfileController::class, 'replies'])->name('profiles.replies');
 

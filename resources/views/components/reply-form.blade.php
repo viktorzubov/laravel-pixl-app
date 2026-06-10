@@ -96,13 +96,4 @@
             </button>
         </div>
     </form>
-
-
-    {{-- @include('partials.post-form', [
-        'labelText' => 'Reply body',
-        'fieldName' => 'reply',
-        'placeholder' => 'Reply to this post',
-        'rows' => 5,
-    ]) --}}
-
 </div>
