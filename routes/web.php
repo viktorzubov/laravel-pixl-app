@@ -27,13 +27,6 @@ Route::get('/dev/logout', function () {
     return redirect()->intended('/feed');
 });
 
-Route::get('/{profile:handle}', [ProfileController::class, 'show'])->name('profiles.show');
-Route::get('/{profile:handle}/with_replies', [ProfileController::class, 'replies'])->name('profiles.replies');
-
-Route::scopeBindings()->group(function () {
-    Route::get('/{profile:handle}/status/{post}', [PostController::class, 'show'])->name('post.show');
-});
-
 Route::get('/feed', function () {
     // TODO: Fetch feed items from the database
     $feedItems = json_decode(json_encode([
@@ -63,3 +56,10 @@ Route::get('/feed', function () {
 Route::get('/profile', function () {
     return view('profile');
 })->name('profile');
+
+Route::get('/{profile:handle}', [ProfileController::class, 'show'])->name('profiles.show');
+Route::get('/{profile:handle}/with_replies', [ProfileController::class, 'replies'])->name('profiles.replies');
+
+Route::scopeBindings()->group(function () {
+    Route::get('/{profile:handle}/status/{post}', [PostController::class, 'show'])->name('post.show');
+});

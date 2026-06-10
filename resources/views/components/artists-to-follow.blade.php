@@ -4,8 +4,9 @@
         @foreach ($artists as $artist)
             <li class="flex items-center justify-between gap-4">
                 <div class="flex items-center gap-2.5">
-                    <img class="size-8 object-cover" src="{{ $artist['image'] }}" alt="{{ $artist['alt'] }}" />
-                    <p class="truncate text-sm">{{ $artist['name'] }}</p>
+                    <img class="size-8 object-cover" src="{{ $artist->avatar_url }}"
+                        alt="Avatar of {{ $artist->display_name }}" />
+                    <p class="truncate text-sm">{{ $artist->display_name }}</p>
                 </div>
                 <button
                     class="bg-pixl-dark/50 hover:bg-pixl-dark/60 active:bg-pixl-dark/75 border-pixl/50 hover:border-pixl/75 text-pixl border px-2 py-1 text-sm">
