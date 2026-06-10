@@ -51,4 +51,13 @@ class PostController extends Controller
             'post' => $post,
         ]);
     }
+
+    public function reply(Profile $profile, Post $post, CreatePostRequest $request)
+    {
+        $currentProfile = Auth::user()->profile;
+
+        Post::reply($currentProfile, $post, $request->content);
+
+        return redirect()->route('posts.index');
+    }
 }

@@ -17,15 +17,10 @@
             </nav>
         </div>
         <!-- Post prompt -->
-        <div class="border-pixl-light/10 mt-8 flex items-start gap-4 border-b pb-4">
-            <a href="{{ route('profiles.show', $profile) }}" class="shrink-0">
-                <img class="size-10 object-cover" src="{{ $profile->avatar_url }}"
-                    alt="Avatar of {{ $profile->display_name }}" />
-            </a>
 
-            <x-post-form :labelText="'Post body'" :fieldName="'content'" :placeholder="'What\'s on your mind, ' . '@' . $profile->handle . '?'" :action="route('posts.store')" />
 
-        </div>
+        <x-post-form />
+
 
         <!-- Feed -->
         <ol class="mt-4">

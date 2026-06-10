@@ -1,11 +1,14 @@
-<div class="border-pixl-light/10 mt-8 flex items-start gap-4 border-b pb-4">
+<!-- Reply Form-->
+<div class="border-pixl-light/10 bg-pixl-light/3 mt-8 flex items-start gap-4 border-t p-4">
     <a href="{{ route('profiles.show', $profile) }}" class="shrink-0">
         <img class="size-10 object-cover" src="{{ $profile->avatar_url }}" alt="Avatar of {{ $profile->display_name }}" />
     </a>
-    <form class="grow" method="POST" action="{{ route('posts.store') }}">
+
+    <form class="grow" method="POST"
+        action="{{ route('posts.reply', ['profile' => $post->profile, 'post' => $post]) }}">
         @csrf
-        <label class="sr-only" for="content">Post body</label>
-        <textarea name="content" id="content" placeholder="What's on your mind, {{ '@' . $profile->handle }}?"
+        <label class="sr-only" for="content">Reply body</label>
+        <textarea name="content" id="content" placeholder="Reply to {{ $post->profile->display_name }}'s post" rows="5"
             class="w-full resize-none text-lg"></textarea>
         <div class="flex items-center justify-between gap-4">
             <div class="flex gap-4">
@@ -93,4 +96,13 @@
             </button>
         </div>
     </form>
+
+
+    {{-- @include('partials.post-form', [
+        'labelText' => 'Reply body',
+        'fieldName' => 'reply',
+        'placeholder' => 'Reply to this post',
+        'rows' => 5,
+    ]) --}}
+
 </div>
