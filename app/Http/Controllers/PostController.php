@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePostRequest;
+use App\Models\Like;
 use App\Models\Post;
 use App\Models\Profile;
 use App\Queries\TimelineQuery;
@@ -59,5 +60,32 @@ class PostController extends Controller
         Post::reply($currentProfile, $post, $request->content);
 
         return redirect()->route('posts.index');
+    }
+
+    public function repost(Profile $profile, Post $post)
+    {
+        $currentProfile = Auth::user()->profile;
+
+        Post::repost($currentProfile, $post);
+
+        return redirect()->route('posts.index');
+    }
+
+    public function quote(Profile $profile, Post $post, CreatePostRequest $request)
+    {
+        $currentProfile = Auth::user()->profile;
+
+        Post::repost($currentProfile, $post, $request->content);
+
+        return redirect()->route('posts.index');
+    }
+
+    public function like(Profile $profile, Post $post)
+    {
+        $currentProfile = Auth::user()->profile;
+
+        Like::createLike($currentProfile, $post);
+
+        return response()->json(['Liked']);
     }
 }
