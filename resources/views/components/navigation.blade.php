@@ -30,7 +30,7 @@
         <!-- Navigation links -->
         <nav class="mt-10">
             <ul class="flex flex-col gap-4">
-                <li><a class="hover:underline" href="#">Home</a></li>
+                <li><a class="hover:underline" href="{{ route('posts.index') }}">Home</a></li>
                 <li><a class="hover:underline" href="#">Explore</a></li>
                 <li class="-ml-4 flex items-center gap-2">
                     <div class="bg-pixl size-2 shrink-0"></div>
@@ -46,31 +46,32 @@
         </nav>
     </div>
 
-    @isset($showPostButton)
+
+    @if (!request()->routeIs('posts.index'))
         <div class="flex flex-col gap-6">
             <button
                 class="bg-pixl hover:bg-pixl/90 active:bg-pixl/95 text-pixl-dark border border-transparent px-4 py-3 text-sm">
                 Post
             </button>
-        @endauth
+    @endif
 
-        <!-- User profile and actions -->
-        <div class="flex gap-3.5">
-            <a href="/profile" class="shrink-0">
-                <img src="/images/adrian.png" alt="Adrian's profile picture" class="size-11 object-cover" />
-            </a>
-            <div class="flex flex-col gap-1 text-sm">
-                <p>_adrian</p>
-                <p class="text-pixl-light/60">@tudssss</p>
-            </div>
-            <button class="group flex gap-0.75 py-2" aria-label="More options">
-                <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
-                <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
-                <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
-            </button>
+    <!-- User profile and actions -->
+    <div class="flex gap-3.5">
+        <a href="/profile" class="shrink-0">
+            <img src="/images/adrian.png" alt="Adrian's profile picture" class="size-11 object-cover" />
+        </a>
+        <div class="flex flex-col gap-1 text-sm">
+            <p>_adrian</p>
+            <p class="text-pixl-light/60">@tudssss</p>
         </div>
+        <button class="group flex gap-0.75 py-2" aria-label="More options">
+            <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
+            <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
+            <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
+        </button>
+    </div>
 
-        @isset($showPostButton)
+    @if (!request()->routeIs('posts.index'))
         </div>
-    @endisset
+    @endif
 </header>
