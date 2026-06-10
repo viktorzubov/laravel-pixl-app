@@ -88,4 +88,33 @@ class PostController extends Controller
 
         return response()->json(['Liked']);
     }
+
+    public function unlike(Profile $profile, Post $post)
+    {
+        $currentProfile = Auth::user()->profile;
+
+        $success = Like::removeLike($currentProfile, $post);
+
+        return response()->json(compact('success'));
+    }
+
+    public function destroy(Profile $profile, Post $post)
+    {
+        $currentProfile = Auth::user()->profile;
+        $success = false;
+
+        if ($currentProfile->id === $post->profile_id) {
+            $success = $post->delete() > 0;
+
+            return response()->json(compact('success'));
+        }
+
+        $repost = $post->reposts()->where('profile_id', $currentProfile->id)->first();
+
+        if (! is_null($repost)) {
+            $success = $post->delete() > 0;
+
+            return response()->json(compact('success'));
+        }
+    }
 }
