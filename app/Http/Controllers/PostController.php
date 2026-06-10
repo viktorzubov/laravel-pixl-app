@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePostRequest;
@@ -8,11 +10,13 @@ use App\Models\Post;
 use App\Models\Profile;
 use App\Queries\PostThreadQuery;
 use App\Queries\TimelineQuery;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(): Factory|View
     {
         $profile = Auth::user()->profile;
 
@@ -24,16 +28,16 @@ class PostController extends Controller
         ]);
     }
 
-    public function store(CreatePostRequest $request)
+    public function store(CreatePostRequest $createPostRequest)
     {
         $profile = Auth::user()->profile;
 
-        $post = Post::publish($profile, $request->content);
+        Post::publish($profile, $createPostRequest->content);
 
         return redirect()->route('posts.index');
     }
 
-    public function show(Profile $profile, Post $post)
+    public function show(Profile $profile, Post $post): Factory|View
     {
         $post = PostThreadQuery::for($post, Auth::user()?->profile)->load();
 
@@ -42,11 +46,11 @@ class PostController extends Controller
         ]);
     }
 
-    public function reply(Profile $profile, Post $post, CreatePostRequest $request)
+    public function reply(Profile $profile, Post $post, CreatePostRequest $createPostRequest)
     {
         $currentProfile = Auth::user()->profile;
 
-        Post::reply($currentProfile, $post, $request->content);
+        Post::reply($currentProfile, $post, $createPostRequest->content);
 
         return redirect()->route('posts.index');
     }
@@ -60,11 +64,11 @@ class PostController extends Controller
         return redirect()->route('posts.index');
     }
 
-    public function quote(Profile $profile, Post $post, CreatePostRequest $request)
+    public function quote(Profile $profile, Post $post, CreatePostRequest $createPostRequest)
     {
         $currentProfile = Auth::user()->profile;
 
-        Post::repost($currentProfile, $post, $request->content);
+        Post::repost($currentProfile, $post, $createPostRequest->content);
 
         return redirect()->route('posts.index');
     }
@@ -84,7 +88,7 @@ class PostController extends Controller
 
         $success = Like::removeLike($currentProfile, $post);
 
-        return response()->json(compact('success'));
+        return response()->json(['success' => $success]);
     }
 
     public function destroy(Profile $profile, Post $post)
@@ -95,7 +99,7 @@ class PostController extends Controller
         if ($currentProfile->id === $post->profile_id) {
             $success = $post->delete() > 0;
 
-            return response()->json(compact('success'));
+            return response()->json(['success' => $success]);
         }
 
         $repost = $post->reposts()->where('profile_id', $currentProfile->id)->first();
@@ -103,7 +107,7 @@ class PostController extends Controller
         if (! is_null($repost)) {
             $success = $post->delete() > 0;
 
-            return response()->json(compact('success'));
+            return response()->json(['success' => $success]);
         }
     }
 }

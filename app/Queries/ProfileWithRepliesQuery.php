@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Queries;
 
 use App\Models\Post;
@@ -18,13 +20,13 @@ class ProfileWithRepliesQuery
     public function paginate(int $perPage = 20): LengthAwarePaginator
     {
         return $this->baseQuery()->paginate($perPage)
-            ->through(fn ($post) => $this->normalize($post));
+            ->through(fn (Post $post): Post => $this->normalize($post));
     }
 
     public function get(): Collection
     {
         return $this->baseQuery()->get()
-            ->map(fn ($post) => $this->normalize($post));
+            ->map(fn (Post $post): Post => $this->normalize($post));
     }
 
     public static function for(Profile $subject, ?Profile $viewer): self
@@ -36,7 +38,7 @@ class ProfileWithRepliesQuery
     {
         $viewerId = $this->viewer?->id ?? 0;
 
-        $posts = Post::query()
+        return Post::query()
             ->where(fn ($q) => $q
                 ->whereBelongsTo($this->subject, 'profile')
                 ->whereNull('parent_id')
@@ -65,8 +67,6 @@ class ProfileWithRepliesQuery
 
             ])
             ->latest();
-
-        return $posts;
 
     }
 

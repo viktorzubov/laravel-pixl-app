@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Queries;
 
 use App\Models\Post;
@@ -10,32 +12,32 @@ use Illuminate\Database\Eloquent\Collection;
 
 class TimelineQuery
 {
-    public function __construct(private Profile $viewer) {}
+    public function __construct(private Profile $profile) {}
 
     public function paginate(int $perPage = 20): LengthAwarePaginator
     {
         return $this->baseQuery()->paginate($perPage)
-            ->through(fn ($post) => $this->normalize($post));
+            ->through(fn (Post $post): Post => $this->normalize($post));
     }
 
     public function get(): Collection
     {
         return $this->baseQuery()->get()
-            ->map(fn ($post) => $this->normalize($post));
+            ->map(fn (Post $post): Post => $this->normalize($post));
     }
 
-    public static function forViewer(Profile $viewer): self
+    public static function forViewer(Profile $profile): self
     {
-        return new self($viewer);
+        return new self($profile);
     }
 
     private function baseQuery(): Builder
     {
-        $followingIds = $this->viewer->followings()
+        $followingIds = $this->profile->followings()
             ->pluck('profiles.id')
-            ->prepend($this->viewer->id);
+            ->prepend($this->profile->id);
 
-        $posts = Post::whereIn('profile_id', $followingIds)
+        return Post::whereIn('profile_id', $followingIds)
             ->whereNull('parent_id')
             ->with([
                 'profile',
@@ -45,14 +47,12 @@ class TimelineQuery
             ])
             ->withCount(['likes', 'replies', 'reposts'])
             ->withExists([
-                'likes as has_liked' => fn ($q) => $q->where('profile_id', $this->viewer->id),
-                'reposts as has_reposted' => fn ($q) => $q->where('profile_id', $this->viewer->id),
-                'repostOf as like_original' => fn ($q) => $q->whereHas('likes', fn ($q) => $q->where('profile_id', $this->viewer->id)),
-                'repostOf as repost_original' => fn ($q) => $q->whereHas('reposts', fn ($q) => $q->where('profile_id', $this->viewer->id)),
+                'likes as has_liked' => fn ($q) => $q->where('profile_id', $this->profile->id),
+                'reposts as has_reposted' => fn ($q) => $q->where('profile_id', $this->profile->id),
+                'repostOf as like_original' => fn ($q) => $q->whereHas('likes', fn ($q) => $q->where('profile_id', $this->profile->id)),
+                'repostOf as repost_original' => fn ($q) => $q->whereHas('reposts', fn ($q) => $q->where('profile_id', $this->profile->id)),
 
             ])->latest();
-
-        return $posts;
 
     }
 

@@ -3,10 +3,12 @@
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Models\User;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
+Route::get('/', function (): Factory|View {
     return view('welcome');
 });
 
@@ -29,11 +31,11 @@ Route::get('/dev/logout', function () {
     return redirect()->intended('/feed');
 })->name('logout');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth'])->group(function (): void {
     Route::get('/home', [PostController::class, 'index'])->name('posts.index');
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 
-    Route::scopeBindings()->group(function () {
+    Route::scopeBindings()->group(function (): void {
         Route::post('/{profile:handle}/status/{post}/reply', [PostController::class, 'reply'])->name('posts.reply');
         Route::post('/{profile:handle}/status/{post}/repost', [PostController::class, 'repost'])->name('posts.repost');
         Route::post('/{profile:handle}/status/{post}/quote', [PostController::class, 'quote'])->name('posts.quote');
@@ -50,6 +52,6 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/{profile:handle}', [ProfileController::class, 'show'])->name('profiles.show');
 Route::get('/{profile:handle}/with_replies', [ProfileController::class, 'replies'])->name('profiles.replies');
 
-Route::scopeBindings()->group(function () {
+Route::scopeBindings()->group(function (): void {
     Route::get('/{profile:handle}/status/{post}', [PostController::class, 'show'])->name('post.show');
 });
