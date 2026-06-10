@@ -42,7 +42,9 @@
                     <div class="flex items-center gap-8">
                         <!-- Likes -->
                         <div class="flex items-center gap-1">
-                            <button aria-label="Like" class="hover:text-pixl">
+                            <button aria-label="Like" @class([
+                                'text-pixl' => $post->has_liked,
+                            ]) class="hover:text-pixl">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14"
                                     id="Heart--Streamline-Core-Remix" class="w-3">
                                     <desc>
@@ -57,7 +59,7 @@
                                     </g>
                                 </svg>
                             </button>
-                            <span class="text-sm">{{ $post->likes_count }}</span>
+                            <span @class(['text-pixl' => $post->has_liked]) class="text-sm">{{ $post->likes_count }}</span>
                         </div>
                         <!-- Comments -->
                         <div class="flex items-center gap-1">
@@ -79,9 +81,11 @@
                             </button>
                             <span class="text-sm">{{ $post->replies_count }}</span>
                         </div>
-                        <!-- Share -->
+                        <!-- Repost -->
                         <div class="flex items-center gap-1">
-                            <button aria-label="Re-posts">
+                            <button aria-label="Re-posts" @class([
+                                'text-yellow-500' => $post->has_reposted,
+                            ])>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-0.835 -0.835 20 20" fill="none"
                                     stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     id="Repeat--Streamline-Lucide" height="20" width="20" class="w-5">
@@ -101,7 +105,7 @@
                                         stroke-width="1.67"></path>
                                 </svg>
                             </button>
-                            <span class="text-sm">{{ $post->reposts_count }}</span>
+                            <span @class(['text-pixl' => $post->has_reposted]) class="text-sm">{{ $post->reposts_count }}</span>
                         </div>
                     </div>
 

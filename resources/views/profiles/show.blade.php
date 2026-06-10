@@ -24,7 +24,7 @@
 
             @foreach ($posts as $item)
                 <!-- Feed item -->
-                <x-post :post="$item->isRepost() && $item->content === null ? $item->repostOf : $item" :show-engagement="true" />
+                <x-post :post="$item" :show-engagement="true" />
             @endforeach
             <!-- More feed items... -->
         </ol>
