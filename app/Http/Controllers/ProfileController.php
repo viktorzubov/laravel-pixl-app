@@ -1,16 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Follow;
 use App\Models\Profile;
 use App\Queries\ProfilePageQuery;
 use App\Queries\ProfileWithRepliesQuery;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
-    public function show(Profile $profile)
+    public function show(Profile $profile): Factory|View
     {
         $profile->loadCount(['followings', 'followers']);
 
@@ -22,7 +26,7 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function replies(Profile $profile)
+    public function replies(Profile $profile): Factory|View
     {
         $profile->loadCount(['followings', 'followers']);
 
@@ -37,7 +41,7 @@ class ProfileController extends Controller
     public function follow(Profile $profile)
     {
         $currentProfile = Auth::user()->profile;
-        $follow = Follow::createFollow($currentProfile, $profile);
+        Follow::createFollow($currentProfile, $profile);
 
         return response()->json(['Following']);
 
@@ -48,7 +52,7 @@ class ProfileController extends Controller
         $currentProfile = Auth::user()->profile;
         $success = Follow::removeFollow($currentProfile, $profile);
 
-        return response()->json(compact('success'));
+        return response()->json(['success' => $success]);
 
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Database\Factories\PostFactory;
@@ -60,31 +62,31 @@ class Post extends Model
         ]);
     }
 
-    public static function reply(Profile $profile, Post $original, string $content): self
+    public static function reply(Profile $profile, Post $post, string $content): self
     {
         return self::create([
             'profile_id' => $profile->id,
             'content' => $content,
-            'parent_id' => $original->id,
+            'parent_id' => $post->id,
             'repost_of_id' => null,
         ]);
     }
 
-    public static function repost(Profile $profile, Post $original, ?string $content = null): self
+    public static function repost(Profile $profile, Post $post, ?string $content = null): self
     {
         return self::firstOrCreate([
             'profile_id' => $profile->id,
             'content' => $content,
             'parent_id' => null,
-            'repost_of_id' => $original->id,
+            'repost_of_id' => $post->id,
         ]);
 
     }
 
-    public static function removeRepost(Profile $profile, Post $original): bool
+    public static function removeRepost(Profile $profile, Post $post): bool
     {
         return static::where('profile_id', $profile->id)
-            ->where('repost_of_id', $original->id)
+            ->where('repost_of_id', $post->id)
             ->delete() > 0;
     }
 }

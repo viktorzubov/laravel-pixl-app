@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Queries;
 
 use App\Models\Post;
@@ -18,13 +20,13 @@ class ProfilePageQuery
     public function paginate(int $perPage = 20): LengthAwarePaginator
     {
         return $this->baseQuery()->paginate($perPage)
-            ->through(fn ($post) => $this->normalize($post));
+            ->through(fn (Post $post): Post => $this->normalize($post));
     }
 
     public function get(): Collection
     {
         return $this->baseQuery()->get()
-            ->map(fn ($post) => $this->normalize($post));
+            ->map(fn (Post $post): Post => $this->normalize($post));
     }
 
     public static function for(Profile $subject, ?Profile $viewer): self
@@ -35,7 +37,8 @@ class ProfilePageQuery
     private function baseQuery(): Builder
     {
         $viewerId = $this->viewer?->id ?? 0;
-        $posts = Post::where('profile_id', $this->subject->id)
+
+        return Post::where('profile_id', $this->subject->id)
             ->whereNull('parent_id')
             ->with([
                 'repostOf' => fn ($q) => $q
@@ -52,8 +55,6 @@ class ProfilePageQuery
 
             ])
             ->latest();
-
-        return $posts;
 
     }
 
